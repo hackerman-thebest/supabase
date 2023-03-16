@@ -447,9 +447,10 @@ export default function IndexPage() {
             </span>
             <h2 className="text-scale-1200 text-4xl mt-4">Cost control with usage caps</h2>
             <p className="mt-3 prose lg:max-w-lg">
-              The Pro tier has a usage quota included. By default, you pay as you grow and will be charged for overusage.
-              You may enable the usage cap to cap the usage at your plans quota and not be charged for additional usage.
-              Note that this will come with restrictions to your project once quota is reached.
+              The Pro tier has a usage quota included. By default, you pay as you grow and will be
+              charged for overusage. You may enable the usage cap to cap the usage at your plans
+              quota and not be charged for additional usage. Note that this will come with
+              restrictions to your project once quota is reached.
             </p>
           </div>
           <div>
