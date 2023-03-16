@@ -4,7 +4,7 @@ import { debounce, isUndefined, values } from 'lodash'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 import generator from 'generate-password'
-import { Button, Listbox, IconUsers, Input, Alert } from 'ui'
+import { Button, Listbox, IconUsers, Input, Alert, IconHelpCircle, Toggle } from 'ui'
 import { PermissionAction } from '@supabase/shared-types/out/constants'
 
 import { NextPageWithLayout } from 'types'
@@ -33,6 +33,7 @@ import {
   NotOrganizationOwnerWarning,
   EmptyPaymentMethodWarning,
 } from 'components/interfaces/Organization/NewProject'
+import UsageCapModal from 'components/interfaces/Billing/UsageCapModal'
 
 const Wizard: NextPageWithLayout = () => {
   const router = useRouter()
@@ -54,6 +55,10 @@ const Wizard: NextPageWithLayout = () => {
   const [passwordStrengthWarning, setPasswordStrengthWarning] = useState('')
   const [passwordStrengthScore, setPasswordStrengthScore] = useState(0)
   const [paymentMethods, setPaymentMethods] = useState<any[] | undefined>(undefined)
+
+  const [showUsageCapHelperModal, setShowUsageCapHelperModal] = useState(false)
+
+  const [isUsageCapEnabled, setIsUsageCapEnabled] = useState(true)
 
   const organizations = values(toJS(app.organizations.list()))
   const currentOrg = organizations.find((o: any) => o.slug === slug)
@@ -150,13 +155,16 @@ const Wizard: NextPageWithLayout = () => {
 
   const onClickNext = async () => {
     setNewProjectLoading(true)
+
+    const dbTier = dbPricingTierKey === 'PRO' && !isUsageCapEnabled ? 'PAYG' : dbPricingTierKey
+
     const data: Record<string, any> = {
       cloud_provider: PROVIDERS.AWS.id, // hardcoded for DB instances to be under AWS
       org_id: currentOrg?.id,
       name: projectName,
       db_pass: dbPass,
       db_region: dbRegion,
-      db_pricing_tier_id: (PRICING_TIER_PRODUCT_IDS as any)[dbPricingTierKey],
+      db_pricing_tier_id: (PRICING_TIER_PRODUCT_IDS as any)[dbTier],
       kps_enabled: kpsEnabled,
     }
     if (postgresVersion) {
@@ -420,6 +428,37 @@ const Wizard: NextPageWithLayout = () => {
                   <EmptyPaymentMethodWarning stripeCustomerId={stripeCustomerId} />
                 )}
               </Panel.Content>
+            )}
+
+            {!isSelectFreeTier && (
+              <>
+                <Panel.Content className="border-b Form section-block--body has-inputs-centered border-panel-border-interior-light dark:border-panel-border-interior-dark">
+                  <Toggle
+                    id="project-name"
+                    layout="horizontal"
+                    label={
+                      <div className="flex space-x-4">
+                        <span>Usage Cap</span>
+                        <IconHelpCircle
+                          size={16}
+                          strokeWidth={1.5}
+                          className="transition opacity-50 cursor-pointer hover:opacity-100"
+                          onClick={() => setShowUsageCapHelperModal(true)}
+                        />
+                      </div>
+                    }
+                    placeholder="Project name"
+                    checked={isUsageCapEnabled}
+                    onChange={() => setIsUsageCapEnabled(!isUsageCapEnabled)}
+                    descriptionText="If enabled, you will be capped at the usage included in your quota. We will restrict your service if you go above your quota with the usage cap on. If disabled, you will simply pay for overusage and not experience any restrictions or limits. You may adjust this anytime in the future."
+                  />
+                </Panel.Content>
+
+                <UsageCapModal
+                  visible={showUsageCapHelperModal}
+                  onHide={() => setShowUsageCapHelperModal(false)}
+                />
+              </>
             )}
           </>
         )}

@@ -295,7 +295,7 @@ const TeamUpgrade: FC<Props> = ({
           <PaymentSummaryPanel
             isRefreshingPreview={isRefreshingPreview}
             subscriptionPreview={subscriptionPreview}
-            isSpendCapEnabled={false}
+            isUsageCapEnabled={false}
             // Current subscription configuration based on DB
             currentPlan={currentSubscription.tier}
             currentAddons={currentAddons}

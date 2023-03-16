@@ -445,18 +445,18 @@ export default function IndexPage() {
             <span className="bg-brand-500 text-brand-1100 rounded-md bg-opacity-30 inline-block  dark:bg-scale-400 dark:text-scale-1100 py-0.5 px-2 text-xs mt-2">
               Available for Pro plan
             </span>
-            <h2 className="text-scale-1200 text-4xl mt-4">Cost control with spend caps</h2>
+            <h2 className="text-scale-1200 text-4xl mt-4">Cost control with usage caps</h2>
             <p className="mt-3 prose lg:max-w-lg">
-              The Pro tier has a usage quota included and a spend cap turned on by default. If you
-              need to go beyond the inclusive limits, simply switch off your spend cap to pay for
-              additional usage.
+              The Pro tier has a usage quota included. By default, you pay as you grow and will be charged for overusage.
+              You may enable the usage cap to cap the usage at your plans quota and not be charged for additional usage.
+              Note that this will come with restrictions to your project once quota is reached.
             </p>
           </div>
           <div>
             <div className="">
               <img
                 className="w-full"
-                src={`${basePath}/images/pricing/spend-cap${isDarkMode ? '' : '-light'}.png`}
+                src={`${basePath}/images/pricing/usage-cap${isDarkMode ? '' : '-light'}.png`}
               />
             </div>
           </div>

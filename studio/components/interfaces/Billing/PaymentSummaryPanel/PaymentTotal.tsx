@@ -8,14 +8,14 @@ interface Props {
   totalMonthlyCost: number
   subscriptionPreview?: SubscriptionPreview
   isRefreshingPreview: boolean
-  isSpendCapEnabled: boolean
+  isUsageCapEnabled: boolean
 }
 
 const PaymentTotal: FC<Props> = ({
   totalMonthlyCost,
   subscriptionPreview,
   isRefreshingPreview,
-  isSpendCapEnabled,
+  isUsageCapEnabled,
 }) => {
   const hasChanges = subscriptionPreview?.has_changes ?? false
   // const totalMonthlyCost = (subscriptionPreview?.base_amount_due_next_billing_cycle ?? 0) / 100
@@ -84,7 +84,7 @@ const PaymentTotal: FC<Props> = ({
                     </p>
                   ) : (
                     <p className="text-sm text-scale-1100">
-                      This amount {!isSpendCapEnabled && !isBillingToday && '+ usage fees '}will be
+                      This amount {!isUsageCapEnabled && !isBillingToday && '+ usage fees '}will be
                       charged on{' '}
                       <span className="text-brand-900">
                         {billingDate.toLocaleDateString('en-US', {
@@ -99,7 +99,7 @@ const PaymentTotal: FC<Props> = ({
                   <p className="text-sm text-scale-1100">
                     You'll pay a monthly total of{' '}
                     <span className="text-scale-1200">
-                      ${totalMonthlyCost} {!isSpendCapEnabled && '+ usage fees '}
+                      ${totalMonthlyCost} {!isUsageCapEnabled && '+ usage fees '}
                     </span>{' '}
                     for each subsequent billing cycle.
                   </p>

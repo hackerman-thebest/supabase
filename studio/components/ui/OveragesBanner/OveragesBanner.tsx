@@ -48,18 +48,18 @@ const OveragesBanner: FC<Props> = ({ tier, minimal }) => {
     tier === PRICING_TIER_PRODUCT_IDS.FREE
       ? "You can check your project's usage details or upgrade to the pro tier to support the growth of your project."
       : tier === PRICING_TIER_PRODUCT_IDS.PRO
-      ? "You can check your project's usage details or consider disabling spend cap to support the growth of your project."
+      ? "You can check your project's usage details or consider disabling usage cap to support the growth of your project."
       : tier === PRICING_TIER_PRODUCT_IDS.PAYG
-      ? "As you have disabled spend cap, additional resources will be charged on a per-usage basis. You can check your project's usage details for more information."
+      ? "As you have disabled usage cap, additional resources will be charged on a per-usage basis. You can check your project's usage details for more information."
       : ''
 
   const description =
     tier === PRICING_TIER_PRODUCT_IDS.FREE
       ? 'Upgrade to the pro tier to support the growth of your project.'
       : tier === PRICING_TIER_PRODUCT_IDS.PRO
-      ? 'Consider disabling spend cap to support the growth of your project'
+      ? 'Consider disabling usage cap to support the growth of your project'
       : tier === PRICING_TIER_PRODUCT_IDS.PAYG
-      ? "As you have disabled spend cap, additional resources will be charged on a per-usage basis. You can check your project's usage details for more information."
+      ? "As you have disabled usage cap, additional resources will be charged on a per-usage basis. You can check your project's usage details for more information."
       : ''
 
   return (

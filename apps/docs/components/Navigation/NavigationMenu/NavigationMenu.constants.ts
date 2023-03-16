@@ -688,7 +688,7 @@ export const platform = {
     {
       name: 'Billing',
       url: undefined,
-      items: [{ name: 'Spend cap', url: '/guides/platform/spend-cap', items: [] }],
+      items: [{ name: 'Usage cap', url: '/guides/platform/usage-cap', items: [] }],
     },
     {
       name: 'Single sign-on',

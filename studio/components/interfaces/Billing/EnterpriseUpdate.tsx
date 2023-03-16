@@ -274,7 +274,7 @@ const EnterpriseUpdate: FC<Props> = ({
         </div>
         <div className="w-[34rem]">
           <PaymentSummaryPanel
-            isSpendCapEnabled={true}
+            isUsageCapEnabled={true}
             isSubmitting={isSubmitting}
             isRefreshingPreview={isRefreshingPreview}
             currentSubscription={currentSubscription}

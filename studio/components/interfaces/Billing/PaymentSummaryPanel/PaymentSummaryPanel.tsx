@@ -36,7 +36,7 @@ interface Props {
     customDomains: SubscriptionAddon
   }
 
-  isSpendCapEnabled: boolean
+  isUsageCapEnabled: boolean
   paymentMethods?: any
   selectedPaymentMethod: any
   isLoadingPaymentMethods: boolean
@@ -58,7 +58,7 @@ interface Props {
 
 const PaymentSummaryPanel: FC<Props> = ({
   isRefreshingPreview,
-  isSpendCapEnabled,
+  isUsageCapEnabled,
   currentSubscription,
   subscriptionPreview,
 
@@ -113,23 +113,22 @@ const PaymentSummaryPanel: FC<Props> = ({
     (currentPlan.prod_id !== STRIPE_PRODUCT_IDS.PAYG &&
       selectedPlan &&
       currentPlan.prod_id !== selectedPlan.id) ||
-    (currentPlan.prod_id !== STRIPE_PRODUCT_IDS.PAYG && !isSpendCapEnabled) ||
-    (currentPlan.prod_id === STRIPE_PRODUCT_IDS.PAYG && isSpendCapEnabled)
+    (currentPlan.prod_id !== STRIPE_PRODUCT_IDS.PAYG && !isUsageCapEnabled) ||
+    (currentPlan.prod_id === STRIPE_PRODUCT_IDS.PAYG && isUsageCapEnabled)
   const isChangingComputeSize = currentAddons.computeSize.id !== selectedAddons.computeSize.id
   const isChangingPITRDuration = currentAddons.pitrDuration?.id !== selectedAddons.pitrDuration?.id
   const isChangingCustomDomains =
     currentAddons.customDomains?.id !== selectedAddons.customDomains?.id
 
+  const togglingOnUsageCap =
+    currentPlan.supabase_prod_id === PRICING_TIER_PRODUCT_IDS.PAYG &&
+    selectedPlan &&
+    selectedPlan.metadata.supabase_prod_id === PRICING_TIER_PRODUCT_IDS.PRO
+
   // If it's enterprise we only only changing of add-ons
   const hasChangesToPlan = isEnterprise
     ? isChangingComputeSize || isChangingPITRDuration
     : subscriptionPreview?.has_changes ?? false
-
-  const getPlanName = (plan: any) => {
-    if (plan.prod_id === STRIPE_PRODUCT_IDS.PAYG || plan.id === STRIPE_PRODUCT_IDS.PAYG) {
-      return 'Pro tier (No spend caps)'
-    } else return plan.name
-  }
 
   const getAddonPriceFromSubscription = (
     key: 'computeSize' | 'pitrDuration' | 'customDomains' | 'supportPlan'
@@ -175,7 +174,7 @@ const PaymentSummaryPanel: FC<Props> = ({
           <p className="text-sm text-scale-1100">Selected subscription</p>
           <div className="flex items-center justify-between">
             <p className={`${isChangingPlan ? 'text-scale-1100 line-through' : ''} text-sm`}>
-              {getPlanName(currentPlan)}
+              {currentPlan.name}
             </p>
             <p className={`${isChangingPlan ? 'text-scale-1100 line-through' : ''} text-sm`}>
               ${(currentPlan.unit_amount / 100).toFixed(2)}
@@ -183,7 +182,7 @@ const PaymentSummaryPanel: FC<Props> = ({
           </div>
           {isChangingPlan && (
             <div className="flex items-center justify-between">
-              <p className="text-sm">{getPlanName(selectedPlan)}</p>
+              <p className="text-sm">{selectedPlan.name}</p>
               <p className="text-sm">
                 ${(getProductPrice(selectedPlan).unit_amount / 100).toFixed(2)}
               </p>
@@ -316,6 +315,16 @@ const PaymentSummaryPanel: FC<Props> = ({
                   description="It will take up to 2 minutes for changes to take place, and your project will be unavailable during that time"
                 />
               )}
+
+              {togglingOnUsageCap && (
+                <InformationBox
+                  hideCollapse
+                  defaultVisibility
+                  icon={<IconAlertCircle strokeWidth={2} />}
+                  title="Enabling usage cap"
+                  description="If you go past your plans quota, you will experience service restrictions. When the usage cap is off, you will simply be charged for overusage."
+                />
+              )}
             </div>
           </div>
         )}
@@ -326,7 +335,7 @@ const PaymentSummaryPanel: FC<Props> = ({
           totalMonthlyCost={totalMonthlyCost / 100}
           subscriptionPreview={subscriptionPreview}
           isRefreshingPreview={isRefreshingPreview}
-          isSpendCapEnabled={isSpendCapEnabled}
+          isUsageCapEnabled={isUsageCapEnabled}
         />
 
         {/* Payment method selection */}
