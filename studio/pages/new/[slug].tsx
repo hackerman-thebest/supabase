@@ -450,7 +450,7 @@ const Wizard: NextPageWithLayout = () => {
                     placeholder="Project name"
                     checked={isUsageCapEnabled}
                     onChange={() => setIsUsageCapEnabled(!isUsageCapEnabled)}
-                    descriptionText="If enabled, you will be capped at the usage included in your quota. We will restrict your service if you go above your quota with the usage cap on. If disabled, you will simply pay for overusage and not experience any restrictions or limits. You may adjust this anytime in the future."
+                    descriptionText="Pro projects have the usage cap enabled by default to prevent your project from exceeding Pro limits. When enabled, usage will be limited, and the project will experience restrictions when passing limits. To seamlessly scale beyond the Pro limits without restrictions, disable the usage cap."
                   />
                 </Panel.Content>
 

@@ -263,7 +263,7 @@ const ProUpgrade: FC<Props> = ({
               <div className="flex items-center justify-between gap-16 px-6 py-4 border rounded border-panel-border-light border-panel-border-dark bg-panel-body-light drop-shadow-sm dark:bg-panel-body-dark">
                 <div>
                   <div className="flex items-center space-x-2">
-                    <p>Enable usage cap</p>
+                    <p>Usage cap</p>
                     <IconHelpCircle
                       size={16}
                       strokeWidth={1.5}
@@ -272,10 +272,10 @@ const ProUpgrade: FC<Props> = ({
                     />
                   </div>
                   <p className="text-sm text-scale-1100">
-                    If enabled, you will be capped at the usage included in your quota. We will
-                    restrict your service if you go above your quota with the usage cap on. If
-                    disabled, you will simply pay for overusage and not experience any restrictions
-                    or limits.
+                    Pro projects have the usage cap enabled by default to prevent your project from
+                    exceeding Pro limits. When enabled, usage will be limited, and the project will
+                    experience restrictions when passing limits. To seamlessly scale beyond the Pro
+                    limits without restrictions, disable the usage cap.
                   </p>
                 </div>
                 <Toggle

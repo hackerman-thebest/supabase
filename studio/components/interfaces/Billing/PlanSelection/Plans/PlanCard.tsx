@@ -124,7 +124,7 @@ const PlanCard: FC<Props> = ({ plan, currentPlan, onSelectPlan }) => {
             {planMeta.name === 'Pro' && currentPlan?.prod_id === STRIPE_PRODUCT_IDS.PRO && (
               <div>
                 <p className="text-sm text-scale-1100">
-                  Need more? Turn off your spend cap to Pay As You Grow
+                  Need more? Turn off your usage cap to Pay As You Grow
                 </p>
                 <p className="text-xs text-scale-1000">
                   Additional fees apply for usage beyond the limits above
