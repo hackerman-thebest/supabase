@@ -322,7 +322,7 @@ const PaymentSummaryPanel: FC<Props> = ({
                   defaultVisibility
                   icon={<IconAlertCircle strokeWidth={2} />}
                   title="Enabling usage cap"
-                  description="If you go past your plans quota, you will experience service restrictions. When the usage cap is off, you will simply be charged for overusage."
+                  description="If you go past your plan's quota, you will experience service restrictions. When the usage cap is off, you will simply be charged for overusage."
                 />
               )}
             </div>
